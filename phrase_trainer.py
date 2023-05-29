@@ -16,9 +16,14 @@ oov_token = '<OOV>' # Token for out-of-vocabulary words
 num_epochs = 15 # Number of training epochs
 word_index = None
 
+TRAIN_DATA = 'train_data/text_data.txt'
+MODEL_ = 'models/f1.model'
+MODEL_WEIGHTS = 'models/my_weights.h5'
+MODEL_WEIGHTS_JSON = 'models/my_model.json'
+
 # Create a tokenizer and fit it on the corpus
 tokenizer = Tokenizer(num_words=vocab_size, oov_token=oov_token)
-text_data = open('text_data.txt').read()
+text_data = open(TRAIN_DATA).read()
 corpus = text_data.split('\n') # Split the text into sentences one sentence per newline
 # corpus = text_data.replace("?",".").replace("!",".").split('.') # Split the text into sentences
 tokenizer.fit_on_texts(corpus)
@@ -66,23 +71,23 @@ def traind_data():
 
 # ========================================
 def save_model_F1(model):
-	model.save('f1.model')
+	model.save(MODEL_)
 
 def get_model_F1():
-	new_model = tf.keras.models.load_model('f1.model')
+	new_model = tf.keras.models.load_model(MODEL_)
 	return new_model
 
 def save_model_F2(model):
-	model.save_weights('my_weights.h5')# Save the weights
+	model.save_weights(MODEL_WEIGHTS)# Save the weights
 	model_json = model.to_json()# Save the architecture in JSON format
-	with open('my_model.json', 'w') as json_file:
+	with open(MODEL_WEIGHTS_JSON, 'w') as json_file:
 		json_file.write(model_json)
 
 def get_model_F2():
-	with open('my_model.json', 'r') as json_file:
+	with open(MODEL_WEIGHTS_JSON, 'r') as json_file:
 		model_json = json_file.read()
 	new_model = tf.keras.models.model_from_json(model_json)
-	new_model.load_weights('my_weights.h5')
+	new_model.load_weights(MODEL_WEIGHTS)
 	return new_model
 
 # ========================================================

@@ -6,40 +6,51 @@ from tensorflow.keras.layers import Embedding, LSTM, Dense
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import json
+
+
+
 # Define hyperparameters
-vocab_size = 150000 # Number of words in the vocabulary
-embedding_dim = 128 # Dimension of word embeddings
-max_length = 50 # Maximum length of input sequences
+vocab_size = 1000 # Number of words in the vocabulary
+embedding_dim = 64 # Dimension of word embeddings
+max_length = 20 # Maximum length of input sequences
 trunc_type = 'post' # Truncate sequences after max_length
 padding_type = 'post' # Pad sequences after max_length
 oov_token = '<OOV>' # Token for out-of-vocabulary words
-num_epochs = 15 # Number of training epochs
-word_index = None
+num_epochs = 20 # Number of training epochs
 
+# Define hyperparameters
+# vocab_size = 10000* # Number of words in the vocabulary
+# embedding_dim = 64* # Dimension of word embeddings
+# max_length = 10* # Maximum length of input sequences
+# trunc_type = 'post' # Truncate sequences after max_length
+# padding_type = 'post' # Pad sequences after max_length
+# oov_token = '<OOV>' # Token for out-of-vocabulary words
+# num_epochs = 10 # Number of training epochs
+
+
+
+
+# =======MODELS==========
 TRAIN_DATA = 'train_data/text_data.txt'
 MODEL_ = 'models/f1.model'
 MODEL_WEIGHTS = 'models/my_weights.h5'
 MODEL_WEIGHTS_JSON = 'models/my_model.json'
 
+
+
+
 # Create a tokenizer and fit it on the corpus
 tokenizer = Tokenizer(num_words=vocab_size, oov_token=oov_token)
 text_data = open(TRAIN_DATA).read()
 corpus = text_data.split('\n') # Split the text into sentences one sentence per newline
-# corpus = text_data.replace("?",".").replace("!",".").split('.') # Split the text into sentences
 tokenizer.fit_on_texts(corpus)
 word_index = tokenizer.word_index
 
+
+
+
+
 def traind_data():
-	# Load the text data (you can use any text corpus you want)
-
-	 # Get the word-index mapping
-	# saving word index (dict)
-	# print(type(word_index))
-	# fff = open("word_index.wi","w")
-	# fff.write(json.dumps(word_index))
-	# fff.close()
-
-	# Convert the sentences into sequences of integers
 	sequences = tokenizer.texts_to_sequences(corpus)
 
 	# Create input and target sequences by shifting the sequences by one word

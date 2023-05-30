@@ -10,7 +10,19 @@ import json
 
 
 # Define hyperparameters
-vocab_size = 1000 # Number of words in the vocabulary
+# vocab_size = 1000 # Number of words in the vocabulary
+# embedding_dim = 64 # Dimension of word embeddings
+# max_length = 20 # Maximum length of input sequences
+# trunc_type = 'post' # Truncate sequences after max_length
+# padding_type = 'post' # Pad sequences after max_length
+# oov_token = '<OOV>' # Token for out-of-vocabulary words
+# num_epochs = 20 # Number of training epochs
+
+
+
+
+# Define hyperparameters
+vocab_size = 10000 # Number of words in the vocabulary
 embedding_dim = 64 # Dimension of word embeddings
 max_length = 20 # Maximum length of input sequences
 trunc_type = 'post' # Truncate sequences after max_length
@@ -18,34 +30,24 @@ padding_type = 'post' # Pad sequences after max_length
 oov_token = '<OOV>' # Token for out-of-vocabulary words
 num_epochs = 20 # Number of training epochs
 
-# Define hyperparameters
-# vocab_size = 10000* # Number of words in the vocabulary
-# embedding_dim = 64* # Dimension of word embeddings
-# max_length = 10* # Maximum length of input sequences
-# trunc_type = 'post' # Truncate sequences after max_length
-# padding_type = 'post' # Pad sequences after max_length
-# oov_token = '<OOV>' # Token for out-of-vocabulary words
-# num_epochs = 10 # Number of training epochs
-
 
 
 
 # =======MODELS==========
-TRAIN_DATA = 'train_data/text_data.txt'
-MODEL_ = 'models/f1.model'
-MODEL_WEIGHTS = 'models/my_weights.h5'
-MODEL_WEIGHTS_JSON = 'models/my_model.json'
+TRAIN_DATA = 'train_data/10k_sentence.txt'
+MODEL_ = 'models/10k_s_model'
+MODEL_WEIGHTS = 'models/10k_s_weights.h5'
+MODEL_WEIGHTS_JSON = 'models/10k_s_model.json'
 
 
 
 
 # Create a tokenizer and fit it on the corpus
 tokenizer = Tokenizer(num_words=vocab_size, oov_token=oov_token)
-text_data = open(TRAIN_DATA).read()
+text_data = open(TRAIN_DATA,encoding="utf8").read()
 corpus = text_data.split('\n') # Split the text into sentences one sentence per newline
 tokenizer.fit_on_texts(corpus)
 word_index = tokenizer.word_index
-
 
 
 
@@ -104,8 +106,8 @@ def get_model_F2():
 # ========================================================
 # Define a function to generate text based on a seed phrase
 def generate_text(seed_text,word_count=1):
-	model = get_model_F1()
-	# model = get_model_F2()
+	# model = get_model_F1()
+	model = get_model_F2()
 	orig_word = seed_text
 
 	# Convert the seed text into a sequence of integers
@@ -122,7 +124,27 @@ def generate_text(seed_text,word_count=1):
 	return seed_text
 
 
+
+def string_manpltn(strs):
+	for num in range(10):
+		strs = strs.replace("{}".format(num),"")
+
+	# puncs = ['"',"'","?","!",",",".",";",":","@","#","$","%","^","&","*","(",")","[","]","“","•","\t","  ","°","\n "]
+	# for punc in puncs:
+	# 	strs = strs.replace(punc,"")
+	strs = strs.replace("  ","").replace("\t","")
+	return strs
+
+def buffer_manpltn():
+	text_data = open(TRAIN_DATA,"r",encoding="utf8")
+	txd = text_data.read()
+	text_data.close()
+
+	fff = open(TRAIN_DATA,'w',encoding="utf8")
+	fff.write(string_manpltn(txd))
+
+# buffer_manpltn()
 traind_data()
 
 # Test the text generation function with some seed phrases
-print(generate_text("i'm gonna live my ",10))
+print(generate_text("first",10))

@@ -7,8 +7,6 @@ from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import json
 
-
-
 # Define hyperparameters
 # vocab_size = 1000 # Number of words in the vocabulary
 # embedding_dim = 64 # Dimension of word embeddings
@@ -19,25 +17,23 @@ import json
 # num_epochs = 20 # Number of training epochs
 
 
-
-
 # Define hyperparameters
 vocab_size = 10000 # Number of words in the vocabulary
 embedding_dim = 64 # Dimension of word embeddings
-max_length = 20 # Maximum length of input sequences
+max_length = 10 # Maximum length of input sequences
 trunc_type = 'post' # Truncate sequences after max_length
 padding_type = 'post' # Pad sequences after max_length
 oov_token = '<OOV>' # Token for out-of-vocabulary words
-num_epochs = 20 # Number of training epochs
+num_epochs = 3 # Number of training epochs
 
 
 
 
 # =======MODELS==========
-TRAIN_DATA = 'train_data/10k_sentence.txt'
-MODEL_ = 'models/10k_s_model'
-MODEL_WEIGHTS = 'models/10k_s_weights.h5'
-MODEL_WEIGHTS_JSON = 'models/10k_s_model.json'
+TRAIN_DATA = 'train_data/300k_sentence.txt'
+MODEL_ = 'models/_model'
+MODEL_WEIGHTS = 'models/_weights.h5'
+MODEL_WEIGHTS_JSON = 'models/_model.json'
 
 
 
